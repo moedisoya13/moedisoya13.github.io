@@ -1,0 +1,70 @@
+@font-face { font-family: 'Galmuri9'; src: url('assets/fonts/Galmuri9.woff2') format('woff2'); font-display: block; }
+@font-face { font-family: 'Galmuri11'; src: url('assets/fonts/Galmuri11.woff2') format('woff2'); font-weight: 400; font-display: block; }
+@font-face { font-family: 'Galmuri11'; src: url('assets/fonts/Galmuri11-Bold.woff2') format('woff2'); font-weight: 700; font-display: block; }
+@font-face { font-family: 'Galmuri14'; src: url('assets/fonts/Galmuri14.woff2') format('woff2'); font-display: block; }
+
+/* 세로 270×480 내부 해상도. --s = 화면 배율 (JS가 계산) */
+:root {
+  --s: 1.5; --fs: 1.5;
+  --bg: #000000; --panel: #0a0810; --ink: #ece6d6; --dim: #8a8578;
+  --accent: #c9a24a; --accent-hi: #f3dc8a; --line: #8d9299; --btn: #1c1a24; --btn-primary: #3a2a10;
+  --danger: #8e1a1a; --warn: #ff6b6b;
+  --pixel: 'Galmuri11', 'Apple SD Gothic Neo', 'Malgun Gothic', monospace;
+  --pixel-sm: 'Galmuri9', 'Apple SD Gothic Neo', 'Malgun Gothic', monospace;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; background: var(--bg); overflow: hidden; touch-action: none; -webkit-user-select: none; user-select: none; overscroll-behavior: none; }
+body { display: flex; align-items: center; justify-content: center; font-family: var(--pixel); color: var(--ink); }
+body.artifact { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+
+#stage { position: relative; flex: none; width: calc(270px * var(--s)); height: calc(480px * var(--s)); }
+#stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; image-rendering: pixelated; image-rendering: crisp-edges; }
+/* 3D(#gl)와 HUD(#ui)는 내부 해상도 작업면, #out이 기기 픽셀로 합성한 실제 화면. #ui는 투명하게 두고 터치만 받는다. */
+#gl { z-index: 0; }
+#out { z-index: 1; pointer-events: none; }
+#ui { z-index: 2; opacity: 0; }
+
+/* 로비 입력 폼: 내부 해상도 단위 × --s */
+#dom { position: absolute; inset: 0; z-index: 3; pointer-events: none; }
+#dom .panel {
+  pointer-events: auto; position: absolute;
+  left: calc(15px * var(--s)); top: calc(62px * var(--s)); width: calc(240px * var(--s));
+  background: var(--panel); border: calc(1px * var(--s)) solid var(--accent);
+  box-shadow: calc(2px * var(--s)) calc(2px * var(--s)) 0 #000, inset 0 0 0 calc(1px * var(--s)) #000;
+  padding: calc(8px * var(--s));
+  font-size: calc(12px * var(--fs)); line-height: 1.25;
+}
+#dom label { display: block; color: var(--accent); font-family: var(--pixel-sm); font-size: calc(10px * var(--fs)); margin: calc(6px * var(--s)) 0 calc(2px * var(--s)); }
+#dom label:first-child { margin-top: 0; }
+#dom input {
+  display: block; width: 100%; min-width: 0;
+  font: inherit; font-family: var(--pixel); font-size: calc(12px * var(--fs));
+  color: #fff; background: #000; border: calc(1px * var(--s)) solid var(--line); outline: none;
+  padding: calc(3px * var(--s)) calc(4px * var(--s)); margin: 0; border-radius: 0;
+  -webkit-user-select: text; user-select: text;
+}
+#dom input:focus-visible, #dom input:focus { border-color: var(--accent-hi); }
+#dom input.code { text-transform: uppercase; letter-spacing: calc(3px * var(--s)); }
+#dom .row { display: flex; gap: calc(4px * var(--s)); margin-top: calc(6px * var(--s)); }
+#dom .row.tight { margin-top: 0; }
+#dom button {
+  flex: 1; min-width: 0; font: inherit; font-family: var(--pixel); font-size: calc(12px * var(--fs));
+  color: var(--ink); background: var(--btn); border: calc(1px * var(--s)) solid var(--accent); border-radius: 0;
+  padding: calc(5px * var(--s)) calc(2px * var(--s)); cursor: pointer;
+  box-shadow: calc(1px * var(--s)) calc(1px * var(--s)) 0 #000;
+}
+#dom button.narrow { flex: 0 0 36%; }
+#dom button.primary { background: var(--danger); }
+#dom button:focus-visible { outline: calc(1px * var(--s)) solid var(--accent-hi); outline-offset: calc(1px * var(--s)); }
+#dom button:active { transform: translate(calc(1px * var(--s)), calc(1px * var(--s))); box-shadow: none; }
+#dom button:disabled, #dom input:disabled { opacity: 0.4; cursor: not-allowed; }
+/* 공개 웹 로비: 이름 한 줄만 (전화기·번호·버튼은 캔버스) */
+#dom .panel.slim { top: calc(42px * var(--s)); display: flex; align-items: center; gap: calc(6px * var(--s)); padding: calc(4px * var(--s)) calc(6px * var(--s)); }
+#dom .panel.slim label { margin: 0; flex: none; }
+#dom .rooms { display: flex; flex-direction: column; gap: calc(3px * var(--s)); }
+#dom .rooms button { text-align: left; padding-left: calc(6px * var(--s)); background: #000; }
+#dom .rooms .empty { color: var(--dim); font-family: var(--pixel-sm); font-size: calc(10px * var(--fs)); padding: calc(3px * var(--s)) 0; }
+#dom .hint { color: var(--dim); font-family: var(--pixel-sm); font-size: calc(10px * var(--fs)); margin-top: calc(4px * var(--s)); }
+#dom .err { color: var(--warn); font-family: var(--pixel-sm); font-size: calc(10px * var(--fs)); margin-top: calc(4px * var(--s)); min-height: calc(10px * var(--s)); }
+@media (prefers-reduced-motion: reduce) { #dom button:active { transform: none; } }
