@@ -1,19 +1,9 @@
 # 3D 타이틀 글자 외곽선 (글꼴 일부)
 
-각 JSON은 아래 글꼴에서 타이틀 글자(믿음의체스, FAITH CHESS)의 외곽선만 뽑은 것입니다(tools/title_font.mjs).
-모든 글꼴은 SIL Open Font License 1.1을 따릅니다. 전문은 맨 아래에 있습니다.
+dohyeon.json은 도현(Do Hyeon)에서 타이틀 글자(믿음의체스, FAITH CHESS)의 외곽선만 뽑은 것입니다(tools/title_font.mjs).
+글꼴은 SIL Open Font License 1.1을 따릅니다. 전문은 아래에 있습니다.
 
-- bagel-fat-one: Copyright 2022 The Bagel Fat Project Authors (https://github.com/JAMO-TYPEFACE/BagelFat)
-- black-han-sans: Copyright 2015 The Black Han Sans Project Authors (https://github.com/zesstype/Black-Han-Sans)
-- jua: Copyright 2018 The BM JUA Project Authors
-- gasoek-one: Copyright 2022 The Gasoek Project Authors (https://github.com/JAMO-TYPEFACE/Gasoek)
-- grandiflora-one: Copyright 2022 The Grandiflora Project Authors (https://github.com/JAMO-TYPEFACE/Grandiflora)
 - do-hyeon: Copyright 2018 The Do Hyeon Project Authors
-- gugi: Copyright (c) 2017 by TAE System & Typefaces Co.. All rights reserved.
-- yeon-sung: Copyright 2018 The Yeon Sung Project Authors
-- song-myung: Copyright 2018 The Song Myung Project Authors
-- dongle: Copyright 2021 The Dongle Project Authors (https://github.com/yangheeryu/Dongle) Dongle-Regular.ttf: Copyright 2021 The Dongle Project Authors (https://github.com/yangheeryu/Dongle) Dongle-Bold.ttf: Copyright 2021 The Dongle Project Authors (https://github.com/yangheeryu/Dongle)
-- moirai-one: Copyright 2022 The Moirai Project Authors (https://github.com/JAMO-TYPEFACE/Moirai)
 
 ---
 
